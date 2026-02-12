@@ -1,0 +1,796 @@
+@import "tailwindcss";
+
+/* ===== XP FONT ===== */
+@font-face {
+  font-family: 'Tahoma';
+  src: local('Tahoma');
+}
+
+/* ===== BASE RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Tahoma', 'Segoe UI', sans-serif;
+  font-size: 12px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ===== XP WINDOW STYLES ===== */
+.xp-window {
+  background: #ece9d8;
+  border: 1px solid #0054e3;
+  border-radius: 8px 8px 0 0;
+  box-shadow:
+    2px 2px 10px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+}
+
+.xp-titlebar {
+  background: linear-gradient(180deg,
+      #0997ff 0%,
+      #0053ee 8%,
+      #0050ee 20%,
+      #006bff 40%,
+      #0062ef 48%,
+      #0050d6 56%,
+      #0040c1 64%,
+      #003fb0 80%,
+      #003baa 90%,
+      #0040c1 100%);
+  border-radius: 8px 8px 0 0;
+  padding: 3px 5px 3px 3px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 30px;
+  cursor: default;
+}
+
+.xp-titlebar.inactive {
+  background: linear-gradient(180deg,
+      #7996c8 0%,
+      #6080b8 8%,
+      #5878b0 20%,
+      #6888c0 40%,
+      #6080b8 48%,
+      #5070a8 56%,
+      #4060a0 64%,
+      #3858a0 80%,
+      #3050a0 90%,
+      #4060a0 100%);
+}
+
+.xp-titlebar-icon {
+  width: 16px;
+  height: 16px;
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+
+.xp-titlebar-text {
+  flex: 1;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.xp-titlebar-buttons {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.xp-btn {
+  width: 21px;
+  height: 21px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.xp-btn-minimize {
+  background: linear-gradient(180deg, #3c8ef3 0%, #1a5bc4 100%);
+}
+
+.xp-btn-maximize {
+  background: linear-gradient(180deg, #3c8ef3 0%, #1a5bc4 100%);
+}
+
+.xp-btn-close {
+  background: linear-gradient(180deg, #e89b6e 0%, #c4593a 50%, #b5472c 100%);
+}
+
+.xp-btn:hover {
+  filter: brightness(1.2);
+}
+
+.xp-btn:active {
+  filter: brightness(0.9);
+}
+
+.xp-window-body {
+  flex: 1;
+  overflow: auto;
+  background: white;
+  border: 2px inset #ece9d8;
+  margin: 0 3px 3px 3px;
+}
+
+.xp-window-body-nopad {
+  flex: 1;
+  overflow: hidden;
+  background: #ece9d8;
+}
+
+/* ===== XP MENU BAR ===== */
+.xp-menubar {
+  background: #ece9d8;
+  padding: 1px 2px;
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid #aca899;
+}
+
+.xp-menubar-item {
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 11px;
+  color: #000;
+}
+
+.xp-menubar-item:hover {
+  background: #316ac5;
+  color: white;
+}
+
+/* ===== XP TASKBAR ===== */
+.xp-taskbar {
+  background: linear-gradient(180deg,
+      #1f5dce 0%,
+      #2968d6 2%,
+      #2460d0 4%,
+      #2258c8 8%,
+      #245ed0 12%,
+      #2662d4 16%,
+      #1e56c0 24%,
+      #1a4eb8 32%,
+      #1c52bc 40%,
+      #1a4db6 60%,
+      #1848b0 70%,
+      #1644aa 80%,
+      #1540a4 90%,
+      #1440a2 100%);
+  height: 38px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  padding: 0 2px;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== START BUTTON ===== */
+.xp-start-btn {
+  background: linear-gradient(180deg,
+      #3b9b3c 0%,
+      #399738 5%,
+      #328e32 15%,
+      #2d8a2e 25%,
+      #2d8d2e 50%,
+      #2a872c 60%,
+      #27822a 75%,
+      #247f28 85%,
+      #237d27 95%,
+      #237d27 100%);
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  padding: 3px 12px 3px 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  box-shadow:
+    inset 1px 1px 1px rgba(255, 255, 255, 0.3),
+    1px 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.xp-start-btn:hover {
+  filter: brightness(1.1);
+}
+
+.xp-start-btn:active {
+  filter: brightness(0.95);
+}
+
+.xp-start-btn img {
+  width: 22px;
+  height: 22px;
+}
+
+/* ===== TASKBAR ITEMS ===== */
+.xp-taskbar-items {
+  flex: 1;
+  display: flex;
+  padding: 0 4px;
+  gap: 2px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.xp-taskbar-item {
+  background: linear-gradient(180deg, #3b76d5 0%, #2660c0 50%, #1f50a8 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  padding: 2px 8px;
+  color: white;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 180px;
+  min-width: 100px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 26px;
+}
+
+.xp-taskbar-item.active {
+  background: linear-gradient(180deg, #e0ddd0 0%, #cfc9b8 50%, #c0baa8 100%);
+  color: #000;
+  border: 1px solid #888;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.xp-taskbar-item img {
+  width: 16px;
+  height: 16px;
+}
+
+/* ===== SYSTEM TRAY ===== */
+.xp-systray {
+  background: linear-gradient(180deg,
+      #0f8bef 0%,
+      #0c7de0 30%,
+      #0a6fc8 50%,
+      #0963bc 70%,
+      #0855b0 100%);
+  height: 32px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-left: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0;
+  min-width: fit-content;
+}
+
+.xp-clock {
+  color: white;
+  font-size: 11px;
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+/* ===== DESKTOP ICONS ===== */
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 80px;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.desktop-icon:hover .desktop-icon-label {
+  text-decoration: underline;
+}
+
+.desktop-icon.selected {
+  background: rgba(49, 106, 197, 0.3);
+  border: 1px dotted rgba(49, 106, 197, 0.5);
+}
+
+.desktop-icon img {
+  width: 48px;
+  height: 48px;
+  image-rendering: auto;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.desktop-icon-label {
+  color: white;
+  font-size: 11px;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  word-break: break-word;
+  line-height: 1.3;
+  max-width: 76px;
+}
+
+/* ===== START MENU ===== */
+.xp-start-menu {
+  position: fixed;
+  bottom: 38px;
+  left: 0;
+  width: 380px;
+  background: #ece9d8;
+  border: 2px solid #0054e3;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.4);
+  z-index: 10000;
+  overflow: hidden;
+}
+
+.xp-start-menu-header {
+  background: linear-gradient(180deg,
+      #0997ff 0%,
+      #0053ee 50%,
+      #003baa 100%);
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.xp-start-menu-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  border: 2px solid #ece9d8;
+  object-fit: cover;
+}
+
+.xp-start-menu-username {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.xp-start-menu-body {
+  display: flex;
+  min-height: 300px;
+}
+
+.xp-start-menu-left {
+  flex: 1;
+  background: white;
+  padding: 4px 0;
+}
+
+.xp-start-menu-right {
+  width: 170px;
+  background: #d4d0c8;
+  padding: 4px 0;
+  border-left: 1px solid #808080;
+}
+
+.xp-start-menu-left .xp-menu-item {
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.xp-start-menu-left .xp-menu-item:hover {
+  background: #316ac5;
+  color: white;
+}
+
+.xp-start-menu-left .xp-menu-item img {
+  width: 32px;
+  height: 32px;
+}
+
+.xp-start-menu-right .xp-menu-item {
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.xp-start-menu-right .xp-menu-item:hover {
+  background: #316ac5;
+  color: white;
+}
+
+.xp-start-menu-right .xp-menu-item img {
+  width: 24px;
+  height: 24px;
+}
+
+.xp-start-menu-separator {
+  height: 1px;
+  background: #808080;
+  margin: 3px 6px;
+}
+
+.xp-start-menu-footer {
+  background: linear-gradient(180deg, #2f71cd 0%, #1a4eb8 100%);
+  padding: 6px 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.xp-start-menu-footer button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+.xp-start-menu-footer button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.xp-start-menu-footer button img {
+  width: 24px;
+  height: 24px;
+}
+
+/* ===== PAINT WINDOW ===== */
+.paint-toolbar {
+  background: #ece9d8;
+  display: flex;
+  gap: 0;
+  padding: 2px;
+}
+
+.paint-toolbox {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  padding: 4px;
+  background: #ece9d8;
+  border: 1px inset #ece9d8;
+  width: fit-content;
+}
+
+.paint-tool-btn {
+  width: 24px;
+  height: 24px;
+  border: 1px solid transparent;
+  background: #ece9d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.paint-tool-btn:hover {
+  border: 1px solid #808080;
+}
+
+.paint-tool-btn.active {
+  border: 1px inset #808080;
+  background: #d4d0c8;
+}
+
+.paint-canvas-area {
+  flex: 1;
+  background: #808080;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 4px;
+  overflow: auto;
+}
+
+.paint-canvas {
+  background: white;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.paint-color-palette {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 4px 8px;
+  background: #ece9d8;
+  border-top: 1px solid #aca899;
+}
+
+.paint-color-box {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #808080;
+  cursor: pointer;
+}
+
+.paint-color-box:hover {
+  border-color: #000;
+}
+
+.paint-active-colors {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+  position: relative;
+}
+
+.paint-fg-color {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #808080;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.paint-bg-color {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #808080;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+/* ===== SCROLLBAR XP STYLE ===== */
+::-webkit-scrollbar {
+  width: 17px;
+  height: 17px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ece9d8;
+  border: 1px solid #aca899;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ece9d8 0%, #d4d0c8 100%);
+  border: 1px solid #aca899;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d4d0c8;
+}
+
+::-webkit-scrollbar-button {
+  background: #ece9d8;
+  border: 1px solid #aca899;
+  height: 17px;
+  width: 17px;
+}
+
+/* ===== EXPLORER STYLES ===== */
+.explorer-sidebar {
+  width: 200px;
+  background: linear-gradient(180deg, #6b9eee 0%, #507cd4 100%);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.explorer-sidebar-section {
+  background: linear-gradient(180deg, #ffffff 0%, #d6dff7 100%);
+  margin: 4px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.explorer-sidebar-title {
+  background: linear-gradient(180deg, #7da4e8 0%, #4a7dd4 100%);
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.explorer-sidebar-content {
+  padding: 6px 10px;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.explorer-sidebar-content a {
+  color: #316ac5;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.explorer-sidebar-content a:hover {
+  text-decoration: underline;
+  color: #1a4eb8;
+}
+
+.explorer-content {
+  flex: 1;
+  padding: 8px;
+  overflow: auto;
+}
+
+.explorer-file-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.explorer-file-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 90px;
+  padding: 8px 4px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.explorer-file-item:hover {
+  background: #e8e8e0;
+}
+
+.explorer-file-item img {
+  width: 32px;
+  height: 32px;
+}
+
+.explorer-file-item span {
+  font-size: 11px;
+  text-align: center;
+  word-break: break-word;
+  line-height: 1.3;
+}
+
+/* ===== DETAIL LIST VIEW ===== */
+.explorer-detail-list {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.explorer-detail-list th {
+  background: linear-gradient(180deg, #ffffff 0%, #e8e4d8 100%);
+  border: 1px solid #aca899;
+  padding: 3px 8px;
+  text-align: left;
+  font-weight: normal;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.explorer-detail-list td {
+  padding: 2px 8px;
+  border-bottom: 1px solid #f0ede1;
+}
+
+.explorer-detail-list tr:hover td {
+  background: #316ac5;
+  color: white;
+}
+
+.explorer-detail-list tr:hover td a {
+  color: white;
+}
+
+/* ===== SKILL BARS ===== */
+.skill-bar-outer {
+  height: 16px;
+  background: #d4d0c8;
+  border: 1px inset #ece9d8;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.skill-bar-inner {
+  height: 100%;
+  background: linear-gradient(180deg, #3d9a3e 0%, #2d8a2e 50%, #247f28 100%);
+  transition: width 1s ease-out;
+}
+
+/* ===== LOADING ANIMATION ===== */
+@keyframes xp-boot {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.xp-boot-in {
+  animation: xp-boot 0.3s ease-out;
+}
+
+/* ===== MOBILE OVERRIDES ===== */
+@media (max-width: 768px) {
+  .desktop-icon img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .desktop-icon-label {
+    font-size: 10px;
+  }
+
+  .desktop-icon {
+    width: 72px;
+  }
+
+  .xp-start-menu {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .xp-start-menu-body {
+    flex-direction: column;
+  }
+
+  .xp-start-menu-right {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid #808080;
+  }
+
+  .explorer-sidebar {
+    display: none;
+  }
+
+  .xp-taskbar-item {
+    min-width: 40px;
+    max-width: 120px;
+    padding: 2px 4px;
+    font-size: 10px;
+  }
+}
