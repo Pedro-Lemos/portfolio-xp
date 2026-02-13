@@ -1,97 +1,13 @@
 import { useState, useEffect } from 'react'
-
-const skillCategories = [
-    {
-        name: 'Linguagens de Programação',
-        icon: '💻',
-        skills: [
-            { name: 'Java', level: 85 },
-            { name: 'Kotlin', level: 80 },
-            { name: 'Python', level: 85 },
-            { name: 'TypeScript', level: 90 },
-            { name: 'JavaScript', level: 90 },
-            { name: 'Swift', level: 65 },
-            { name: 'C#/.NET', level: 60 },
-        ],
-    },
-    {
-        name: 'Cloud & DevOps',
-        icon: '☁️',
-        skills: [
-            { name: 'AWS (Lambda, ECS, EKS)', level: 88 },
-            { name: 'GCP', level: 55 },
-            { name: 'Azure', level: 50 },
-            { name: 'Docker', level: 80 },
-            { name: 'Git', level: 90 },
-        ],
-    },
-    {
-        name: 'Frameworks & Bibliotecas',
-        icon: '🧩',
-        skills: [
-            { name: 'React', level: 88 },
-            { name: 'Angular', level: 75 },
-            { name: 'Spring Boot', level: 78 },
-            { name: 'Next.js', level: 82 },
-        ],
-    },
-    {
-        name: 'Observabilidade & Mensageria',
-        icon: '📊',
-        skills: [
-            { name: 'Datadog', level: 80 },
-            { name: 'Prometheus', level: 70 },
-            { name: 'Grafana', level: 75 },
-            { name: 'Kafka', level: 72 },
-            { name: 'AWS SQS', level: 75 },
-        ],
-    },
-    {
-        name: 'Banco de Dados',
-        icon: '🗄️',
-        skills: [
-            { name: 'DynamoDB', level: 75 },
-            { name: 'SQL Server', level: 70 },
-            { name: 'Salesforce', level: 55 },
-        ],
-    },
-    {
-        name: 'Certificações',
-        icon: '📜',
-        type: 'certificates',
-        skills: [
-            {
-                name: 'AWS Certified Cloud Practitioner',
-                provider: 'Amazon Web Services (AWS)',
-                link: 'https://www.credly.com/badges/39617839-f3e1-492b-8858-a7660869a2f8/linked_in_profile'
-            },
-            {
-                name: 'SRE - Site Reliability Engineering',
-                provider: 'Itaú Unibanco',
-                link: 'https://www.credly.com/badges/41ac65c4-6eee-41d3-91ea-71a5823ced7a/public_url'
-            },
-            {
-                name: 'Data Modelling',
-                provider: 'Itaú Unibanco',
-                link: 'https://www.credly.com/badges/ff82b39f-a81d-44dd-965b-9507f2922efe/linked_in_profile'
-            },
-            {
-                name: 'Cybersecurity Essentials',
-                provider: 'Cisco',
-                link: 'https://www.credly.com/badges/fc6bf45d-29a6-4a88-bdc0-60bf603162bd/linked_in_profile'
-            },
-            {
-                name: 'Networking Academy',
-                provider: 'Cisco',
-                link: 'https://www.credly.com/badges/ef590a22-5ab4-431f-aae1-bbcadad166fb/linked_in_profile'
-            },
-        ],
-    },
-]
+import useLanguageStore from '../store/languageStore'
+import { translations, skillCategoriesData } from '../i18n/translations'
 
 export default function Skills() {
     const [activeTab, setActiveTab] = useState(0)
     const [animated, setAnimated] = useState(false)
+    const language = useLanguageStore((s) => s.language)
+    const t = translations[language].skills
+    const skillCategories = skillCategoriesData[language]
 
     useEffect(() => {
         setAnimated(false)
@@ -103,7 +19,6 @@ export default function Skills() {
 
     return (
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-            {/* XP Tabs */}
             <div style={{
                 display: 'flex',
                 background: '#ece9d8',
@@ -134,7 +49,6 @@ export default function Skills() {
                 ))}
             </div>
 
-            {/* Tab Content */}
             <div style={{ flex: 1, overflow: 'auto', padding: '16px', background: 'white' }}>
                 <div style={{
                     display: 'flex',
@@ -150,7 +64,7 @@ export default function Skills() {
                             {category.name}
                         </h3>
                         <p style={{ fontSize: '10px', color: '#808080' }}>
-                            {category.skills.length} {category.type === 'certificates' ? 'certificações' : 'habilidades nesta categoria'}
+                            {category.skills.length} {category.type === 'certificates' ? t.certificationsCount : t.skillsInCategory}
                         </p>
                     </div>
                 </div>
@@ -220,7 +134,6 @@ export default function Skills() {
                 </div>
             </div>
 
-            {/* XP footer */}
             <div style={{
                 background: '#ece9d8',
                 padding: '8px 12px',

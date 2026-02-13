@@ -1,8 +1,10 @@
+import { useState, useEffect } from 'react'
 import DesktopIcon from './DesktopIcon'
 import Window from './Window'
 import Taskbar from './Taskbar'
 import StartMenu from './StartMenu'
 import useWindowStore from '../store/windowStore'
+import useLanguageStore from '../store/languageStore'
 
 import AboutMe from '../windows/AboutMe'
 import Projects from '../windows/Projects'
@@ -11,126 +13,136 @@ import Experience from '../windows/Experience'
 import PaintWindow from '../windows/PaintWindow'
 import RecycleBin from '../windows/RecycleBin'
 import Contact from '../windows/Contact'
+import { translations } from '../i18n/translations'
 
-const desktopIcons = [
-    {
-        id: 'about',
-        icon: '/icons/My Computer.png',
-        label: 'Sobre Mim',
-        windowConfig: {
-            title: 'Sobre Mim — Pedro Lemos',
-            icon: '/icons/My Computer.png',
-            component: AboutMe,
-            width: 680,
-            height: 500,
-        },
-    },
-    {
-        id: 'projects',
-        icon: '/icons/My Documents.png',
-        label: 'Meus Projetos',
-        windowConfig: {
-            title: 'Meus Projetos',
-            icon: '/icons/My Documents.png',
-            component: Projects,
-            width: 720,
-            height: 500,
-        },
-    },
-    {
-        id: 'skills',
-        icon: '/icons/Control Panel.png',
-        label: 'Habilidades',
-        windowConfig: {
-            title: 'Habilidades — System Properties',
-            icon: '/icons/Control Panel.png',
-            component: Skills,
-            width: 500,
-            height: 520,
-        },
-    },
-    {
-        id: 'experience',
-        icon: '/icons/Folder Closed.png',
-        label: 'Experiência',
-        windowConfig: {
-            title: 'Experiência Profissional',
-            icon: '/icons/Folder Closed.png',
-            component: Experience,
-            width: 700,
-            height: 500,
-        },
-    },
-    {
-        id: 'contact',
-        icon: '/icons/Outlook Express.png',
-        label: 'Contato',
-        windowConfig: {
-            title: 'Contato — Outlook Express',
-            icon: '/icons/Outlook Express.png',
-            component: Contact,
-            width: 550,
-            height: 400,
-        },
-    },
-    {
-        id: 'paint',
-        icon: '/icons/Paint.png',
-        label: 'Minha Foto',
-        windowConfig: {
-            title: 'untitled - Paint',
-            icon: '/icons/Paint.png',
-            component: PaintWindow,
-            width: 620,
-            height: 520,
-        },
-    },
-    {
-        id: 'recycle',
-        icon: '/icons/Recycle Bin (full).png',
-        label: 'Lixeira',
-        windowConfig: {
-            title: 'Lixeira',
-            icon: '/icons/Recycle Bin (full).png',
-            component: RecycleBin,
-            width: 550,
-            height: 400,
-        },
-    },
-    {
-        id: 'github',
-        icon: '/icons/Internet Explorer 6.png',
-        label: 'GitHub',
-        onDoubleClick: () => window.open('https://github.com/Pedro-Lemos', '_blank'),
-    },
-    {
-        id: 'linkedin',
-        icon: '/icons/My Network Places.png',
-        label: 'LinkedIn',
-        onDoubleClick: () => window.open('https://linkedin.com/in/pedrohnlemos', '_blank'),
-    },
-    {
-        id: 'bototrace',
-        icon: '/icons/Internet Shortcut.png',
-        label: 'BotoTrace',
-        onDoubleClick: () => window.open('https://www.bototrace.app', '_blank'),
-    },
-    {
-        id: 'autono',
-        icon: '/icons/Internet Shortcut.png',
-        label: 'Autôno',
-        onDoubleClick: () => window.open('https://www.souautono.app', '_blank'),
-    },
-    {
-        id: 'notepad',
-        icon: '/icons/Notepad.png',
-        label: 'README.txt',
-        windowConfig: {
-            title: 'README.txt — Notepad',
-            icon: '/icons/Notepad.png',
-            component: () => (
-                <div style={{ fontFamily: "'Courier New', monospace", fontSize: '12px', padding: '8px', whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>
-                    {`=================================
+export default function Desktop() {
+    const windows = useWindowStore((s) => s.windows)
+    const closeStartMenu = useWindowStore((s) => s.closeStartMenu)
+    const language = useLanguageStore((s) => s.language)
+    const [desktopIcons, setDesktopIcons] = useState([])
+
+    useEffect(() => {
+        const t = translations[language]
+        
+        const icons = [
+            {
+                id: 'about',
+                icon: '/icons/My Computer.png',
+                label: language === 'pt' ? 'Sobre Mim' : 'About Me',
+                windowConfig: {
+                    title: language === 'pt' ? 'Sobre Mim — Pedro Lemos' : 'About Me — Pedro Lemos',
+                    icon: '/icons/My Computer.png',
+                    component: AboutMe,
+                    width: 680,
+                    height: 500,
+                },
+            },
+            {
+                id: 'projects',
+                icon: '/icons/My Documents.png',
+                label: language === 'pt' ? 'Meus Projetos' : 'My Projects',
+                windowConfig: {
+                    title: language === 'pt' ? 'Meus Projetos' : 'My Projects',
+                    icon: '/icons/My Documents.png',
+                    component: Projects,
+                    width: 720,
+                    height: 500,
+                },
+            },
+            {
+                id: 'skills',
+                icon: '/icons/Control Panel.png',
+                label: language === 'pt' ? 'Habilidades' : 'Skills',
+                windowConfig: {
+                    title: language === 'pt' ? 'Habilidades — System Properties' : 'Skills — System Properties',
+                    icon: '/icons/Control Panel.png',
+                    component: Skills,
+                    width: 500,
+                    height: 520,
+                },
+            },
+            {
+                id: 'experience',
+                icon: '/icons/Folder Closed.png',
+                label: language === 'pt' ? 'Experiência' : 'Experience',
+                windowConfig: {
+                    title: language === 'pt' ? 'Experiência Profissional' : 'Professional Experience',
+                    icon: '/icons/Folder Closed.png',
+                    component: Experience,
+                    width: 700,
+                    height: 500,
+                },
+            },
+            {
+                id: 'contact',
+                icon: '/icons/Outlook Express.png',
+                label: language === 'pt' ? 'Contato' : 'Contact',
+                windowConfig: {
+                    title: language === 'pt' ? 'Contato — Outlook Express' : 'Contact — Outlook Express',
+                    icon: '/icons/Outlook Express.png',
+                    component: Contact,
+                    width: 550,
+                    height: 400,
+                },
+            },
+            {
+                id: 'paint',
+                icon: '/icons/Paint.png',
+                label: language === 'pt' ? 'Minha Foto' : 'My Photo',
+                windowConfig: {
+                    title: 'untitled - Paint',
+                    icon: '/icons/Paint.png',
+                    component: PaintWindow,
+                    width: 620,
+                    height: 520,
+                },
+            },
+            {
+                id: 'recycle',
+                icon: '/icons/Recycle Bin (full).png',
+                label: language === 'pt' ? 'Lixeira' : 'Recycle Bin',
+                windowConfig: {
+                    title: language === 'pt' ? 'Lixeira' : 'Recycle Bin',
+                    icon: '/icons/Recycle Bin (full).png',
+                    component: RecycleBin,
+                    width: 550,
+                    height: 400,
+                },
+            },
+            {
+                id: 'github',
+                icon: '/icons/Internet Explorer 6.png',
+                label: 'GitHub',
+                onDoubleClick: () => window.open('https://github.com/Pedro-Lemos', '_blank'),
+            },
+            {
+                id: 'linkedin',
+                icon: '/icons/My Network Places.png',
+                label: 'LinkedIn',
+                onDoubleClick: () => window.open('https://linkedin.com/in/pedrohnlemos', '_blank'),
+            },
+            {
+                id: 'bototrace',
+                icon: '/icons/Internet Shortcut.png',
+                label: 'BotoTrace',
+                onDoubleClick: () => window.open('https://www.bototrace.app', '_blank'),
+            },
+            {
+                id: 'autono',
+                icon: '/icons/Internet Shortcut.png',
+                label: 'Autôno',
+                onDoubleClick: () => window.open('https://www.souautono.app', '_blank'),
+            },
+            {
+                id: 'notepad',
+                icon: '/icons/Notepad.png',
+                label: language === 'pt' ? 'README.txt' : 'README.txt',
+                windowConfig: {
+                    title: 'README.txt — Notepad',
+                    icon: '/icons/Notepad.png',
+                    component: () => (
+                        <div style={{ fontFamily: "'Courier New', monospace", fontSize: '12px', padding: '8px', whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>
+                            {language === 'pt' ? `=================================
   PORTFÓLIO — Pedro Lemos
 =================================
 
@@ -160,18 +172,47 @@ FEITO COM:
 • react-rnd (Drag & Resize)
 • ♥ e muita nostalgia
 
-Obrigado por visitar! 🖥️`}
-                </div>
-            ),
-            width: 400,
-            height: 420,
-        },
-    },
-]
+Obrigado por visitar! 🖥️` : `=================================
+  PORTFOLIO — Pedro Lemos
+=================================
 
-export default function Desktop() {
-    const windows = useWindowStore((s) => s.windows)
-    const closeStartMenu = useWindowStore((s) => s.closeStartMenu)
+Welcome to my portfolio!
+
+This site was built as a
+Windows XP desktop to bring
+a nostalgic touch to the
+presentation of my skills and projects.
+
+-------------------------------
+HOW TO NAVIGATE:
+-------------------------------
+• Double-click icons
+  to open windows
+• Use the Start Menu to
+  navigate between sections
+• Drag and resize windows
+  like real XP!
+
+-------------------------------
+MADE WITH:
+-------------------------------
+• React + Vite
+• Tailwind CSS v4
+• Zustand (State Management)
+• react-rnd (Drag & Resize)
+• ♥ and lots of nostalgia
+
+Thanks for visiting! 🖥️`}
+                        </div>
+                    ),
+                    width: 400,
+                    height: 420,
+                },
+            },
+        ]
+        
+        setDesktopIcons(icons)
+    }, [language])
 
     return (
         <div

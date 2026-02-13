@@ -1,7 +1,12 @@
+import useLanguageStore from '../store/languageStore'
+import { translations } from '../i18n/translations'
+
 export default function Contact() {
+    const language = useLanguageStore((s) => s.language)
+    const t = translations[language].contact
+
     return (
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-            {/* Menu bar */}
             <div className="xp-menubar">
                 <span className="xp-menubar-item">File</span>
                 <span className="xp-menubar-item">Edit</span>
@@ -11,7 +16,6 @@ export default function Contact() {
                 <span className="xp-menubar-item">Help</span>
             </div>
 
-            {/* Toolbar */}
             <div style={{
                 background: '#ece9d8',
                 padding: '4px 8px',
@@ -33,18 +37,17 @@ export default function Contact() {
                 }}
                     onClick={() => window.open('mailto:pedro.hlemos2003@gmail.com', '_blank')}
                 >
-                    📤 Enviar
+                    📤 {t.send}
                 </button>
             </div>
 
-            {/* Email form */}
             <div style={{
                 background: 'white',
                 padding: '8px 12px',
                 borderBottom: '1px solid #ece9d8',
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                    <label style={{ fontSize: '11px', color: '#808080', width: '50px' }}>Para:</label>
+                    <label style={{ fontSize: '11px', color: '#808080', width: '50px' }}>{t.to}</label>
                     <div style={{
                         flex: 1,
                         padding: '3px 6px',
@@ -56,7 +59,7 @@ export default function Contact() {
                     </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                    <label style={{ fontSize: '11px', color: '#808080', width: '50px' }}>CC:</label>
+                    <label style={{ fontSize: '11px', color: '#808080', width: '50px' }}>{t.cc}</label>
                     <div style={{
                         flex: 1,
                         padding: '3px 6px',
@@ -65,11 +68,11 @@ export default function Contact() {
                         fontSize: '11px',
                         color: '#c0c0c0',
                     }}>
-                        (vazio)
+                        ({translations[language].common.empty})
                     </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <label style={{ fontSize: '11px', color: '#808080', width: '50px' }}>Assunto:</label>
+                    <label style={{ fontSize: '11px', color: '#808080', width: '50px' }}>{t.subject}</label>
                     <div style={{
                         flex: 1,
                         padding: '3px 6px',
@@ -77,12 +80,11 @@ export default function Contact() {
                         background: '#f8f8f0',
                         fontSize: '11px',
                     }}>
-                        Olá Pedro! Vi seu portfólio XP 🖥️
+                        {t.subjectDefault} 🖥️
                     </div>
                 </div>
             </div>
 
-            {/* Email body */}
             <div style={{
                 flex: 1,
                 padding: '12px 16px',
@@ -92,10 +94,10 @@ export default function Contact() {
                 lineHeight: '1.8',
                 color: '#333',
             }}>
-                <p>Olá! 👋</p>
+                <p>{t.hello}</p>
                 <br />
-                <p>Se você chegou até aqui, provavelmente está interessado em conversar comigo.</p>
-                <p>Fique à vontade para entrar em contato através dos canais abaixo:</p>
+                <p>{t.contactMessage}</p>
+                <p>{t.contactMessage2}</p>
                 <br />
                 <div style={{
                     background: '#f0f4ff',
@@ -133,7 +135,7 @@ export default function Contact() {
                 </div>
                 <br />
                 <p style={{ color: '#808080', fontSize: '11px' }}>
-                    — Enviado do meu Windows XP 💾
+                    {t.sentFrom} 💾
                 </p>
             </div>
         </div>

@@ -1,13 +1,11 @@
+import useLanguageStore from '../store/languageStore'
+import { translations } from '../i18n/translations'
+
 export default function RecycleBin() {
-    const deletedItems = [
-        { name: 'bugs_em_producao.exe', type: 'Aplicação', size: '404 KB', date: 'Nunca' },
-        { name: 'código_sem_testes.js', type: 'JavaScript', size: '∞ KB', date: 'Ontem' },
-        { name: 'css_inline_everywhere.html', type: 'HTML', size: '666 KB', date: 'Tempos antigos' },
-        { name: 'deploy_na_sexta.sh', type: 'Shell Script', size: '13 KB', date: 'Sexta-feira 13' },
-        { name: 'console.log(debug).ts', type: 'TypeScript', size: '999 KB', date: 'Sempre' },
-        { name: 'projeto_que_ia_fazer.md', type: 'Markdown', size: '0 KB', date: 'Um dia...' },
-        { name: 'stack_overflow_ctrl_c.java', type: 'Java', size: '100%', date: 'Todo dia' },
-    ]
+    const language = useLanguageStore((s) => s.language)
+    const t = translations[language].recycleBin
+
+    const deletedItems = t.items
 
     return (
         <div style={{ padding: '8px', overflow: 'auto', height: '100%' }}>
@@ -23,9 +21,9 @@ export default function RecycleBin() {
             }}>
                 <span style={{ fontSize: '20px' }}>⚠️</span>
                 <div>
-                    <p style={{ fontSize: '11px', fontWeight: 'bold' }}>Aviso do Sistema</p>
+                    <p style={{ fontSize: '11px', fontWeight: 'bold' }}>{t.warningTitle}</p>
                     <p style={{ fontSize: '11px', color: '#666' }}>
-                        Nenhum bug foi descartado aqui... ainda. Mas esses arquivos foram eliminados da carreira! 🤣
+                        {t.warningMessage}
                     </p>
                 </div>
             </div>
@@ -33,10 +31,10 @@ export default function RecycleBin() {
             <table className="explorer-detail-list">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Tipo</th>
-                        <th>Tamanho</th>
-                        <th>Data de exclusão</th>
+                        <th>{t.name}</th>
+                        <th>{t.type}</th>
+                        <th>{t.size}</th>
+                        <th>{t.date}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,7 +62,7 @@ export default function RecycleBin() {
                 color: '#808080',
                 textAlign: 'center',
             }}>
-                💡 Dica: Os melhores devs também cometem erros — mas aprendem com eles!
+                💡 {t.tip}
             </div>
         </div>
     )

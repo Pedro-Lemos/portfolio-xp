@@ -1,3 +1,6 @@
+import useLanguageStore from '../store/languageStore'
+import { translations } from '../i18n/translations'
+
 const PAINT_COLORS = [
     '#000000', '#808080', '#800000', '#808000', '#008000', '#008080', '#000080', '#800080',
     '#808040', '#004040', '#0080ff', '#0040ff', '#804000', '#c0c0c0',
@@ -6,6 +9,9 @@ const PAINT_COLORS = [
 ]
 
 export default function PaintWindow() {
+    const language = useLanguageStore((s) => s.language)
+    const t = translations[language].paint
+
     return (
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
             {/* Menu bar */}
@@ -85,8 +91,8 @@ export default function PaintWindow() {
                 display: 'flex',
                 justifyContent: 'space-between',
             }}>
-                <span>pedro_lemos.png</span>
-                <span>450 x 380 px</span>
+                <span>{t.fileName}</span>
+                <span>{t.dimensions}</span>
             </div>
         </div>
     )

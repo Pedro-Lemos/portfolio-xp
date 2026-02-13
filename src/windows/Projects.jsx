@@ -1,71 +1,23 @@
 import { useState } from 'react'
-
-const projects = [
-    {
-        id: 'bototrace',
-        name: 'BotoTrace',
-        icon: '/icons/Network Connection.png',
-        type: 'Projeto Pessoal',
-        description: 'Dashboard de observabilidade para solo founders, criadores de SaaS e projetos de vibe coding. Monitore métricas, logs e performance em um só lugar.',
-        tech: ['Next.js', 'TypeScript', 'Vercel', 'Analytics'],
-        url: 'https://www.bototrace.app',
-        date: '2025',
-    },
-    {
-        id: 'autono',
-        name: 'Autôno',
-        icon: '/icons/Scheduled Tasks.png',
-        type: 'Projeto Pessoal',
-        description: 'Aplicativo focado para gestão de trabalho, finanças e agenda — tudo em um só lugar — para profissionais autônomos.',
-        tech: ['Swift', 'iOS', 'Mobile'],
-        url: 'https://www.souautono.app',
-        date: '2025',
-    },
-    {
-        id: 'cloud-itau',
-        name: 'Modernização Cloud',
-        icon: '/icons/My Computer.png',
-        type: 'Itaú Unibanco',
-        description: 'Desenvolvimento full-stack de nova plataforma de escrituração de ativos de renda fixa e variável na AWS. Migração de sistemas legados para arquitetura cloud-native.',
-        tech: ['Angular', 'TypeScript', 'React', 'AWS Lambda', 'Python', 'Java'],
-        url: null,
-        date: '2025 - Atual',
-    },
-    {
-        id: 'portabilidade-itau',
-        name: 'App Portabilidade',
-        icon: '/icons/Chip.png',
-        type: 'Itaú Unibanco',
-        description: 'Nova jornada de portabilidade de crédito consignado no SuperApp Itaú. Arquitetura de microsserviços com Kotlin, Spring, AWS ECS, SQS, Kafka e DynamoDB.',
-        tech: ['Kotlin', 'Spring', 'AWS ECS', 'Kafka', 'DynamoDB', 'Datadog'],
-        url: null,
-        date: '2024 - 2025',
-    },
-    {
-        id: 'fecap-challenges',
-        name: 'Desafios Reais FECAP',
-        icon: '/icons/Certificate.png',
-        type: 'Acadêmico',
-        description: 'Soluções para desafios do mercado propostos por empresas como Uber e Nubank, com foco na resolução de problemas práticos.',
-        tech: ['Problem Solving', 'Teamwork'],
-        url: null,
-        date: '2023 - 2024',
-    },
-]
+import useLanguageStore from '../store/languageStore'
+import { translations, projectsData } from '../i18n/translations'
 
 export default function Projects() {
     const [selected, setSelected] = useState(null)
+    const language = useLanguageStore((s) => s.language)
+    const t = translations[language].projects
+    const projects = projectsData[language]
 
     return (
         <div style={{ display: 'flex', height: '100%' }}>
             <div className="explorer-sidebar">
                 <div className="explorer-sidebar-section">
                     <div className="explorer-sidebar-title">
-                        <span>📁 Projetos</span>
+                        <span>📁 {t.title}</span>
                     </div>
                     <div className="explorer-sidebar-content">
                         <p style={{ fontSize: '11px', color: '#333' }}>
-                            {projects.length} projeto(s) encontrado(s)
+                            {projects.length} {t.found}
                         </p>
                         {selected && (
                             <div style={{ marginTop: '8px' }}>
@@ -78,7 +30,7 @@ export default function Projects() {
                                         rel="noopener noreferrer"
                                         style={{ fontSize: '10px', display: 'block', marginTop: '4px' }}
                                     >
-                                        🌐 Acessar site
+                                        🌐 {t.accessSite}
                                     </a>
                                 )}
                             </div>
@@ -88,17 +40,17 @@ export default function Projects() {
 
                 <div className="explorer-sidebar-section">
                     <div className="explorer-sidebar-title">
-                        <span>🔗 Links Rápidos</span>
+                        <span>🔗 {t.quickLinks}</span>
                     </div>
                     <div className="explorer-sidebar-content">
                         <a href="https://www.bototrace.app" target="_blank" rel="noopener noreferrer">
-                            🔍 BotoTrace
+                            🔍 {t.bototrace}
                         </a>
                         <a href="https://www.souautono.app" target="_blank" rel="noopener noreferrer">
-                            📱 Autôno
+                            📱 {t.autono}
                         </a>
                         <a href="https://github.com/Pedro-Lemos" target="_blank" rel="noopener noreferrer">
-                            💻 GitHub
+                            💻 {t.github}
                         </a>
                     </div>
                 </div>
@@ -106,17 +58,17 @@ export default function Projects() {
 
             <div className="explorer-content">
                 <div style={{ marginBottom: '8px', padding: '4px 8px', background: '#f5f5f0', border: '1px solid #e0ddd0', fontSize: '11px', color: '#666' }}>
-                    📁 Projetos &gt; Todos ({projects.length} itens)
+                    📁 {t.allItems} ({projects.length} {t.items})
                 </div>
 
                 <table className="explorer-detail-list">
                     <thead>
                         <tr>
                             <th style={{ width: '32px' }}></th>
-                            <th>Nome</th>
-                            <th>Tipo</th>
-                            <th>Tecnologias</th>
-                            <th>Data</th>
+                            <th>{t.name}</th>
+                            <th>{t.type}</th>
+                            <th>{t.tech}</th>
+                            <th>{t.date}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -164,9 +116,9 @@ export default function Projects() {
                             {selected.description}
                         </p>
                         <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
-                            {selected.tech.map((t) => (
+                            {selected.tech.map((tech) => (
                                 <span
-                                    key={t}
+                                    key={tech}
                                     style={{
                                         background: '#d4d0c8',
                                         border: '1px solid #aca899',
@@ -175,7 +127,7 @@ export default function Projects() {
                                         borderRadius: '2px',
                                     }}
                                 >
-                                    {t}
+                                    {tech}
                                 </span>
                             ))}
                         </div>
@@ -191,7 +143,7 @@ export default function Projects() {
                                     color: '#316ac5',
                                 }}
                             >
-                                🌐 Acessar {selected.url}
+                                🌐 {t.accessSite}: {selected.url}
                             </a>
                         )}
                     </div>

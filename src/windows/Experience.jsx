@@ -1,51 +1,11 @@
-const experiences = [
-    {
-        role: 'Engenheiro de Software',
-        company: 'Itaú Unibanco',
-        period: 'Set 2025 — Atual',
-        icon: '🚀',
-        highlights: [
-            'Liderando a modernização de sistemas legados para arquitetura cloud-native na AWS',
-            'Atuação Fullstack: Angular, TypeScript, React (Frontend) + AWS Lambda, Python, Java (Backend)',
-            'Modelagem de dados e integração de microsserviços para escalabilidade e performance',
-        ],
-    },
-    {
-        role: 'Engenheiro de Software Júnior',
-        company: 'Itaú Unibanco',
-        period: 'Mai 2024 — Set 2025',
-        icon: '⭐',
-        highlights: [
-            'Nova jornada de portabilidade de crédito consignado no SuperApp Itaú',
-            'Microsserviços em Kotlin com Spring, AWS ECS, SQS, Kafka e DynamoDB',
-            'Tolerância a falhas com Resilience4j e observabilidade com Datadog e Grafana',
-            'Microsserviços em Python com AWS Lambda, EKS e Glue Jobs',
-            '🏆 Prêmio PRAD — Reconhecimento de Alto Desempenho no primeiro ano',
-        ],
-    },
-    {
-        role: 'Estagiário de Dados Analytics',
-        company: 'Itaú Unibanco',
-        period: 'Mai 2023 — Mai 2024',
-        icon: '📊',
-        highlights: [
-            'Desenvolvimento de plataformas internas low-code (IULearn e IUBOX) com Power Apps',
-            'Automação de processos e tomada de decisão baseada em dados via Power Platform',
-        ],
-    },
-    {
-        role: 'Jovem Aprendiz de Dados Analytics',
-        company: 'Itaú Unibanco',
-        period: 'Set 2022 — Mai 2023',
-        icon: '📈',
-        highlights: [
-            'Indicadores de qualidade e visualização de dados com metodologia Lean Agile',
-            'Experiência com Automation Anywhere, Alteryx, SQL Server e Salesforce',
-        ],
-    },
-]
+import useLanguageStore from '../store/languageStore'
+import { translations, experienceData } from '../i18n/translations'
 
 export default function Experience() {
+    const language = useLanguageStore((s) => s.language)
+    const t = translations[language].experience
+    const experiences = experienceData[language]
+
     return (
         <div style={{ padding: '16px', overflow: 'auto', height: '100%' }}>
             <div style={{
@@ -59,16 +19,15 @@ export default function Experience() {
                 <img src="/icons/Certificate.png" alt="" style={{ width: '32px', height: '32px' }} />
                 <div>
                     <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: '#003399' }}>
-                        Experiência Profissional
+                        {t.title}
                     </h2>
                     <p style={{ fontSize: '10px', color: '#808080' }}>
-                        Trajetória no Itaú Unibanco — Set 2022 até o presente
+                        {t.subtitle}
                     </p>
                 </div>
             </div>
 
             <div style={{ position: 'relative' }}>
-                {/* Timeline line */}
                 <div style={{
                     position: 'absolute',
                     left: '15px',
@@ -88,7 +47,6 @@ export default function Experience() {
                             position: 'relative',
                         }}
                     >
-                        {/* Timeline dot */}
                         <div style={{
                             width: '32px',
                             height: '32px',
@@ -105,7 +63,6 @@ export default function Experience() {
                             {exp.icon}
                         </div>
 
-                        {/* Content card */}
                         <div style={{
                             flex: 1,
                             background: idx === 0 ? '#f0f4ff' : '#f5f5f0',
@@ -178,7 +135,7 @@ export default function Experience() {
                 marginTop: '8px',
             }}>
                 <p style={{ fontSize: '11px', color: '#666' }}>
-                    🎓 <strong>Formação:</strong> Bacharelado em Ciência da Computação — Universidade FECAP (Previsão: Dez 2027)
+                    🎓 <strong>{t.education}:</strong> {t.educationText}
                 </p>
             </div>
         </div>
